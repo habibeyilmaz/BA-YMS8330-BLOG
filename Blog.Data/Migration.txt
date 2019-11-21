@@ -1,0 +1,3 @@
+﻿add-migration Initial -Context "BlogContext" -StartupProject "Blog.Web" -Project "Blog.Data"
+
+update-database -Context "BlogContext" -StartupProject "Blog.Web" -Project "Blog.Data"

@@ -25,7 +25,7 @@ namespace Blog.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<BlogContext>(options => options.UseSqlServer("Server=myServerAddress;Database=myDataBase;User Id=sa; Password = 123; "));
+            services.AddDbContext<BlogContext>(options => options.UseSqlServer("Server=localhost;Database=yms8330_Blog ;User Id=sa;Password=123; "));
 
             services.Configure<CookiePolicyOptions>(options =>
             {
