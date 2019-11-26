@@ -11,8 +11,8 @@ namespace Blog.Data.Context
         public BlogContext(DbContextOptions<BlogContext> options) : base(options)
         { }
         public DbSet<User>Users { get; set; }
-
         public DbSet<Blog.Data.Models.Blog> Blog { get; set; }
-
+        public DbSet<Contact> Contacts { get; set; }
+        public DbSet<Page> Pages { get; set; }
     }
 }
