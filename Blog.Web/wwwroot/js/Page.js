@@ -54,5 +54,40 @@
             $("#Contact-Index-Form").show();
           alert("Validation error!")
         }
+    },
+
+    User: {
+
+        Login: {
+            LoginButton: function ()
+            {
+            var email = $("#Email").val();
+            var password = $("#Password").val();
+
+            var data = {
+                Email: email,
+                Password: password
+                };
+                $.ajax({
+                    type: "POST",
+                    url: "/User/LoginAction",
+                    data: JSON.stringify(data),
+                    success: Page.Contact.Send_Callback,
+                    error: Page.Contact.Send_Callback_Error,
+                    dataType: "json",
+                    contentType: "application/json"
+                });
+               
+            },
+             LoginButton_Callback: function (result) {
+                 console.log(result);
+            },
+            LoginButton_Callback_Error: function (request, status, error) {
+                console.log(error);
+                console.log(status);
+                console.log(request);
+            }
+        }
+
     }
 }
