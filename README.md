@@ -1,2 +1,2 @@
 # BA-YMS8330-BLOG
-blog projem 
+Bilge Adam YMS8330 - Blog

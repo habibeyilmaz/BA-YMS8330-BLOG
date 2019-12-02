@@ -1,0 +1,7 @@
+﻿@model List<Blog.Data.Models.Category>
+@{
+    foreach (var category in Model)
+    {
+        <div><a href="#">@category.Name (@category.Blogs.Count)</a></div>
+    }
+}

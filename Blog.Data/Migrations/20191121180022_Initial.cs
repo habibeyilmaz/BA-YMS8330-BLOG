@@ -69,7 +69,7 @@ namespace Blog.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Blog",
+                name: "Blogs",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -84,15 +84,15 @@ namespace Blog.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Blog", x => x.Id);
+                    table.PrimaryKey("PK_Blogs", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Blog_Category_CategoryId",
+                        name: "FK_Blogs_Category_CategoryId",
                         column: x => x.CategoryId,
                         principalTable: "Category",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Blog_Users_UserId",
+                        name: "FK_Blogs_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
@@ -110,7 +110,7 @@ namespace Blog.Data.Migrations
                     BlogId = table.Column<int>(nullable: false),
                     Content = table.Column<string>(nullable: true),
                     UserId = table.Column<int>(nullable: true),
-                    NickName = table.Column<string>(nullable: true),
+                    Nickname = table.Column<string>(nullable: true),
                     Email = table.Column<string>(nullable: true),
                     VoteUp = table.Column<int>(nullable: false),
                     VoteDown = table.Column<int>(nullable: false)
@@ -119,9 +119,9 @@ namespace Blog.Data.Migrations
                 {
                     table.PrimaryKey("PK_Comment", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Comment_Blog_BlogId",
+                        name: "FK_Comment_Blogs_BlogId",
                         column: x => x.BlogId,
-                        principalTable: "Blog",
+                        principalTable: "Blogs",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -133,13 +133,13 @@ namespace Blog.Data.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Blog_CategoryId",
-                table: "Blog",
+                name: "IX_Blogs_CategoryId",
+                table: "Blogs",
                 column: "CategoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Blog_UserId",
-                table: "Blog",
+                name: "IX_Blogs_UserId",
+                table: "Blogs",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
@@ -164,7 +164,7 @@ namespace Blog.Data.Migrations
                 name: "Comment");
 
             migrationBuilder.DropTable(
-                name: "Blog");
+                name: "Blogs");
 
             migrationBuilder.DropTable(
                 name: "Category");

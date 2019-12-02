@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Blog.Data.Migrations
 {
     [DbContext(typeof(BlogContext))]
-    [Migration("20191121182456_Comment")]
-    partial class Comment
+    [Migration("20191126175706_Page_2")]
+    partial class Page_2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -49,7 +49,7 @@ namespace Blog.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Blog");
+                    b.ToTable("Blogs");
                 });
 
             modelBuilder.Entity("Blog.Data.Models.Category", b =>
@@ -92,7 +92,7 @@ namespace Blog.Data.Migrations
                     b.Property<string>("Email")
                         .HasMaxLength(320);
 
-                    b.Property<string>("NickName")
+                    b.Property<string>("Nickname")
                         .HasMaxLength(50);
 
                     b.Property<int?>("UserId");
@@ -108,6 +108,27 @@ namespace Blog.Data.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Comment");
+                });
+
+            modelBuilder.Entity("Blog.Data.Models.Contact", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreateDate");
+
+                    b.Property<bool>("Deleted");
+
+                    b.Property<string>("Message");
+
+                    b.Property<string>("Name");
+
+                    b.Property<string>("Surname");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Contacts");
                 });
 
             modelBuilder.Entity("Blog.Data.Models.Nationality", b =>
@@ -127,6 +148,28 @@ namespace Blog.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Nationality");
+                });
+
+            modelBuilder.Entity("Blog.Data.Models.Page", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Content")
+                        .IsRequired();
+
+                    b.Property<DateTime>("CreateDate");
+
+                    b.Property<bool>("Deleted");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(150);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Pages");
                 });
 
             modelBuilder.Entity("Blog.Data.Models.User", b =>

@@ -7,7 +7,7 @@ namespace Blog.Data.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AlterColumn<string>(
-                name: "NickName",
+                name: "Nickname",
                 table: "Comment",
                 maxLength: 50,
                 nullable: true,
@@ -34,7 +34,7 @@ namespace Blog.Data.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AlterColumn<string>(
-                name: "NickName",
+                name: "Nickname",
                 table: "Comment",
                 nullable: true,
                 oldClrType: typeof(string),

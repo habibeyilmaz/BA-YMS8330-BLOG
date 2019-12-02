@@ -1,23 +1,32 @@
 ﻿var Page = {
+    Init: function () {
+        $.ajax({
+            type: "GET",
+            url: "/Module/Categories",
+            data: [],
+            success: function (result) {
+                $("#Module-Categories").html(result)
+            },
+            dataType: "html" 
+        });
+
+    },
     Contact: {
-
         Send: function () {
-
-
             var name = $("#Name").val();
             var surname = $("#Surname").val();
             var message = $("#Message").val();
 
             if (name && name.length < 2) {
-                alert("isim alanı 2 karakterden küçük olamaz.")
+                alert("İsim alanı 2 karakterden az olamaz!");
                 return;
             }
             else if (surname && surname.length < 2) {
-                alert("isim alanı 2 karakterden küçük olamaz.")
+                alert("Soyisim alanı 2 karakterden az olamaz!");
                 return;
             }
             else if (message && message.length < 3) {
-                alert("mesaj alanı 3 karakterden küçük olamaz.")
+                alert("Mesaj alanı 3 karakterden az olamaz!");
                 return;
             }
 
@@ -37,50 +46,44 @@
                 success: Page.Contact.Send_Callback,
                 error: Page.Contact.Send_Callback_Error,
                 dataType: "json",
-                contentType :"application/json"
+                contentType: "application/json"
             });
-
         },
         Send_Callback: function (result) {
             $("#Contact-Index-Sending").hide();
             $("#Contact-Index-Sent").show();
             console.log(result);
-
         },
-
-        Send_Callback_Error: function () {
+        Send_Callback_Error: function(request, status, error) {
             $("#Contact-Index-Sending").hide();
             $("#Contact-Index-Sent").hide();
             $("#Contact-Index-Form").show();
-          alert("Validation error!")
+            alert("Validation error!");
         }
     },
-
     User: {
-
         Login: {
-            LoginButton: function ()
-            {
-            var email = $("#Email").val();
-            var password = $("#Password").val();
+            LoginButton: function() {
+                var email = $("#Email").val();
+                var password = $("#Password").val();
 
-            var data = {
-                Email: email,
-                Password: password
+                var data = {
+                    Email: email,
+                    Password: password
                 };
                 $.ajax({
                     type: "POST",
                     url: "/User/LoginAction",
                     data: JSON.stringify(data),
-                    success: Page.Contact.Send_Callback,
-                    error: Page.Contact.Send_Callback_Error,
+                    success: Page.User.Login.LoginButton_Callback,
+                    error: Page.User.Login.LoginButton_Callback_Error,
                     dataType: "json",
                     contentType: "application/json"
                 });
-               
             },
-             LoginButton_Callback: function (result) {
-                 console.log(result);
+            LoginButton_Callback: function(result) {
+                console.log(result);
+                window.location.href = "/";
             },
             LoginButton_Callback_Error: function (request, status, error) {
                 console.log(error);
@@ -88,6 +91,39 @@
                 console.log(request);
             }
         }
+    },
+    Blog: {
+        New: {
+            Save: function() {
+                var title = $("#Title").val();
+                var content = $("#Content").val();
+                var categoryId = parseInt($("#Category").val());
 
+                var data = {
+                    Title: title,
+                    Content: content,
+                    CategoryId: categoryId
+                };
+
+                $.ajax({
+                    type: "POST",
+                    url: "/Blog/Add",
+                    data: JSON.stringify(data),
+                    success: Page.Blog.New.Save_Callback,
+                    error: Page.Blog.New.Save_Callback_Error,
+                    dataType: "json",
+                    contentType: "application/json"
+                });
+            },
+            Save_Callback: function (result) {
+                window.location.href = "/blog/detail/" + result.id;
+               
+            },
+            Save_Callback_Error: function(request, status, error) {
+                console.log(request);
+                console.log(status);
+                console.log(error);
+            }
+        }
     }
 }

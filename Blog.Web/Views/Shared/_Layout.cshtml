@@ -1,38 +1,38 @@
 ﻿@using Microsoft.AspNetCore.Http
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html>
 <head>
-    <title>Bu sitenin başlığı</title>
+    <title>Bu sitenin başlığı!</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"
             integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
             crossorigin="anonymous"></script>
     <script src="~/js/Page.js"></script>
 </head>
-
-<body>
+<body onload="Page.Init();">
 <div class="container">
     <div class="row">
         <div class="col-4">
-            <div><a href="@Url.Action("Index", "Home")">Anasayfa</a></div>
-            <div><a href="@Url.Action("Index", "AboutUs")">Hakkımda</a></div>
-            <div><a href="@Url.Action("Index", "Contact")">İletişim</a></div>
-            @{ 
-                int? userId = Context.Session.GetInt32("UserId")
-
-                    if (userId !=null && userId != 0)
-                         {
-                              <div><a hred ="@Url.Action("Login","User")"Çıkış<asyn
-                         }
-                    //buraaaaaaaaaaaaaaaaaaaaaaaaa
+            <div><a href="@Url.Action("Index","Home")">Anasayfa</a></div>
+            <div><a href="@Url.Action("Index","AboutUs")">Hakkımda</a></div>
+            <div><a href="@Url.Action("Index","Contact")">İletişim</a></div>
+            @{
+                int? userId = Context.Session.GetInt32("UserId");
+                if (userId != null && userId != 0)
+                {
+                    <div><a href="@Url.Action("New","Blog")">Yeni Yazı</a></div>
+                    <div><a href="@Url.Action("LogoutAction","User")">Çıkış</a></div>
+                }
+                else
+                {
+                    <div><a href="@Url.Action("Login","User")">Kullanıcı Girişi</a></div>
+                }
             }
-            <div><a href="@Url.Action("Login", "User")">Kullanıcı Girişi</a></div>
-        </div>
+            <div id="Module-Categories"></div>
 
+        </div>
         <div class="col-8">@RenderBody()</div>
     </div>
-
 </div>
-
 </body>
 </html>

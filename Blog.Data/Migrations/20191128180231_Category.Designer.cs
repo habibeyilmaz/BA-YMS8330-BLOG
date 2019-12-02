@@ -10,14 +10,14 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Blog.Data.Migrations
 {
     [DbContext(typeof(BlogContext))]
-    [Migration("20191121180240_Initial")]
-    partial class Initial
+    [Migration("20191128180231_Category")]
+    partial class Category
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.8-servicing-32085")
+                .HasAnnotation("ProductVersion", "2.1.14-servicing-32113")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -49,7 +49,7 @@ namespace Blog.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Blog");
+                    b.ToTable("Blogs");
                 });
 
             modelBuilder.Entity("Blog.Data.Models.Category", b =>
@@ -70,7 +70,12 @@ namespace Blog.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Category");
+                    b.ToTable("Categories");
+
+                    b.HasData(
+                        new { Id = 1, CreateDate = new DateTime(2019, 11, 28, 18, 2, 30, 401, DateTimeKind.Utc), Deleted = false, Description = "...", Name = "Aşk" },
+                        new { Id = 2, CreateDate = new DateTime(2019, 11, 28, 18, 2, 30, 402, DateTimeKind.Utc), Deleted = false, Description = "!!!", Name = "Meşk" }
+                    );
                 });
 
             modelBuilder.Entity("Blog.Data.Models.Comment", b =>
@@ -81,15 +86,19 @@ namespace Blog.Data.Migrations
 
                     b.Property<int>("BlogId");
 
-                    b.Property<string>("Content");
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasMaxLength(500);
 
                     b.Property<DateTime>("CreateDate");
 
                     b.Property<bool>("Deleted");
 
-                    b.Property<string>("Email");
+                    b.Property<string>("Email")
+                        .HasMaxLength(320);
 
-                    b.Property<string>("NickName");
+                    b.Property<string>("Nickname")
+                        .HasMaxLength(50);
 
                     b.Property<int?>("UserId");
 
@@ -104,6 +113,27 @@ namespace Blog.Data.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Comment");
+                });
+
+            modelBuilder.Entity("Blog.Data.Models.Contact", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreateDate");
+
+                    b.Property<bool>("Deleted");
+
+                    b.Property<string>("Message");
+
+                    b.Property<string>("Name");
+
+                    b.Property<string>("Surname");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Contacts");
                 });
 
             modelBuilder.Entity("Blog.Data.Models.Nationality", b =>
@@ -123,6 +153,34 @@ namespace Blog.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Nationality");
+
+                    b.HasData(
+                        new { Id = 1, Code = "tr", CreateDate = new DateTime(2019, 11, 28, 18, 2, 30, 402, DateTimeKind.Utc), Deleted = false, Name = "Türkiye" }
+                    );
+                });
+
+            modelBuilder.Entity("Blog.Data.Models.Page", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Content")
+                        .IsRequired();
+
+                    b.Property<DateTime>("CreateDate");
+
+                    b.Property<bool>("Deleted");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(150);
+
+                    b.Property<int>("PageKind");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Pages");
                 });
 
             modelBuilder.Entity("Blog.Data.Models.User", b =>
@@ -166,6 +224,10 @@ namespace Blog.Data.Migrations
                     b.HasIndex("NationalityId");
 
                     b.ToTable("Users");
+
+                    b.HasData(
+                        new { Id = 1, BirthDate = new DateTime(1986, 8, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), CreateDate = new DateTime(2019, 11, 28, 18, 2, 30, 402, DateTimeKind.Utc), Deleted = false, Email = "e.dedeoglu@gmail.com", Gender = 1, Name = "Erçin", NationalityId = 1, Password = "12345678", Surname = "Dedeoğlu", Username = "ercin" }
+                    );
                 });
 
             modelBuilder.Entity("Blog.Data.Models.Blog", b =>

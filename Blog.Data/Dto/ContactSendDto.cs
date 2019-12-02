@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Blog.Data.Dto
 {
@@ -9,8 +6,10 @@ namespace Blog.Data.Dto
     {
         [Required, MinLength(2), MaxLength(50)]
         public string Name { get; set; }
+
         [Required, MinLength(2), MaxLength(50)]
         public string Surname { get; set; }
+
         [Required, MinLength(3), MaxLength(500)]
         public string Message { get; set; }
     }

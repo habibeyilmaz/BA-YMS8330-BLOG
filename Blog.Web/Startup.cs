@@ -25,26 +25,22 @@ namespace Blog.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddSession(options =>
             {
                 // Set a short timeout for easy testing.
-                options.IdleTimeout = TimeSpan.FromSeconds(60);
+                options.IdleTimeout = TimeSpan.FromMinutes(60);
                 options.Cookie.HttpOnly = true;
                 // Make the session cookie essential
                 options.Cookie.IsEssential = true;
             });
 
-
-            services.AddDbContext<BlogContext>(options => options.UseSqlServer("Server=localhost;Database=yms8330_Blog ;User Id=sa;Password=123; "));
+            services.AddDbContext<BlogContext>(options => options.UseSqlServer("Server=localhost;Database=YMS8330_Blog;User Id=sa;Password=123;"));
 
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
-              //  options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
@@ -53,8 +49,6 @@ namespace Blog.Web
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             app.UseSession();
-
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

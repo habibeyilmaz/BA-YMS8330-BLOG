@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Blog.Data.Migrations
 {
     [DbContext(typeof(BlogContext))]
-    [Migration("20191126181927_Page_3")]
-    partial class Page_3
+    [Migration("20191128174213_Seed")]
+    partial class Seed
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -49,7 +49,7 @@ namespace Blog.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Blog");
+                    b.ToTable("Blogs");
                 });
 
             modelBuilder.Entity("Blog.Data.Models.Category", b =>
@@ -71,6 +71,11 @@ namespace Blog.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Category");
+
+                    b.HasData(
+                        new { Id = 1, CreateDate = new DateTime(2019, 11, 28, 17, 42, 12, 726, DateTimeKind.Utc), Deleted = false, Description = "...", Name = "Aşk" },
+                        new { Id = 2, CreateDate = new DateTime(2019, 11, 28, 17, 42, 12, 727, DateTimeKind.Utc), Deleted = false, Description = "!!!", Name = "Meşk" }
+                    );
                 });
 
             modelBuilder.Entity("Blog.Data.Models.Comment", b =>
@@ -92,7 +97,7 @@ namespace Blog.Data.Migrations
                     b.Property<string>("Email")
                         .HasMaxLength(320);
 
-                    b.Property<string>("NickName")
+                    b.Property<string>("Nickname")
                         .HasMaxLength(50);
 
                     b.Property<int?>("UserId");

@@ -1,0 +1,24 @@
+﻿@model List<Blog.Data.Models.Category>
+@{
+    Layout = "_Layout";
+}
+<div>
+    <select id="Category">
+        <option disabled="disabled">Bir seçim yap evlat!</option>
+        @{
+            foreach (var category in Model)
+            {
+                <option value="@category.Id">@category.Name</option>
+            }
+        }
+    </select>
+</div>
+<div>
+    <input type="text" id="Title" placeholder="Yazı başlığı" />
+</div>
+<div>
+    <textarea id="Content" placeholder="İçerik..."></textarea>
+</div>
+<div>
+    <input type="button" value="Kaydet" onclick="Page.Blog.New.Save();"/>
+</div>

@@ -1,17 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Blog.Data.Context;
 using Blog.Data.Dto;
+using Blog.Data.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Blog.Web.Controllers
 {
     public class ContactController : Controller
     {
-        
         private readonly BlogContext _blogContext;
+
         public ContactController(BlogContext blogContext)
         {
             _blogContext = blogContext;
@@ -22,14 +20,15 @@ namespace Blog.Web.Controllers
             return View();
         }
 
-        public IActionResult Send([FromBody] ContactSendDto contactSend)
+        [HttpPost]
+        public IActionResult Send([FromBody]ContactSendDto contactSend)
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return BadRequest();
             }
 
-            _blogContext.Contacts.Add(new Data.Models.Contact()
+            _blogContext.Contacts.Add(new Contact()
             {
                 Name = contactSend.Name,
                 Surname = contactSend.Surname,
@@ -37,10 +36,7 @@ namespace Blog.Web.Controllers
                 CreateDate = DateTime.UtcNow
             });
             _blogContext.SaveChanges();
-
             return new JsonResult("ok");
-
-        
         }
     }
 }
