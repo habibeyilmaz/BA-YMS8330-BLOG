@@ -2,6 +2,7 @@
 using System.Linq;
 using Blog.Data.Context;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Blog.Web.Controllers
 {
@@ -16,7 +17,7 @@ namespace Blog.Web.Controllers
 
         public IActionResult Index()
         {
-            List<Blog.Data.Models.Blog> blogs = _blogContext.Blogs
+            List<Blog.Data.Models.Blog> blogs = _blogContext.Blogs.Include(a=> a.User)
                 .OrderByDescending(a => a.CreateDate).ToList();
 
             return View(blogs);

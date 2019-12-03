@@ -2,17 +2,80 @@
 @{
     Layout = "_Layout";
 }
-<div>
+<div class="desc">
+    <h4>Welcome to my blog.</h4>
+    <p>Sed sed leo sit amet elit sagittis fermentum. Nulla posuere commodo erat. Nam ac nunc ipsum, id espara tincidunt orci. Quisque adipiscing molestie dolor, ut congue sem porta et. Sed sapien urna, auctor et accumsan ut, accumsan sit amet dui. Nunc tristique interdum magna, dictum volutpat sem. Nam ac nunc ipsum, id espara tincidunt orci. Sed sapien urna, auctor et accumsan ut.</p>
+</div>
+<div class="main">
     @{
         foreach (var blog in Model)
         {
-            <div>
-                <h4><a href="@Url.Action("Detail", "Blog", new {id = blog.Id})">@blog.Title</a></h4>
-                <div>
-                    @blog.Content
+            <article>
+                <header><h1><a href="@Url.Action("Detail","Blog", new { id = blog.Id })">@blog.Title</a></h1></header>
+                <div class="meta">@blog.CreateDate.ToString("d"),&nbsp;<span>@blog.User.Username</span>,&nbsp;<a href="#">4 Comments</a></div>
+                <div class="entry">
+                    
+                    <p>@blog.Content</p>
+                    <p><a href="@Url.Action("Detail","Blog", new { id = blog.Id })" class="more-link">Devamı...</a></p>
                 </div>
-                <div>@blog.CreateDate.ToShortDateString()</div>
-            </div>
+            </article>
         }
     }
+
+
+    <div class="pagination">
+        <div class="left"><a href="#">Older posts</a></div>
+        <div class="right"><a href="#">Newer posts</a></div>
+    </div>
 </div>
+<div class="sidebar hidden">
+    <div class="subscribe">
+        <h6>Subscribe to my blog</h6>
+        <a href="mailto:youremail@yourdomain.com"><img src="/theme/images/social_icons/email.png" alt="" /></a>
+        <a href="#"><img src="/theme/images/social_icons/rss.png" alt="" /></a>
+    </div>
+    <div>
+        <h6>Categories</h6>
+        <ul>
+            <li><a href="#">General</a></li>
+            <li><a href="#">News</a></li>
+            <li><a href="#">Apps</a></li>
+            <li><a href="#">WordPress</a></li>
+            <li><a href="#">Webdesign</a></li>
+            <li><a href="#">PHP</a></li>
+        </ul>
+    </div>
+    <div class="widget widget_recent_entries">
+        <h6 class="widget-title">Recent posts</h6>
+        <ul>
+            <li><a title="Say Hi to Biopic" href="#">Say Hi to Biopic</a></li>
+            <li><a title="Featured Image Post" href="#">Featured Image Post</a></li>
+            <li><a title="Vimeo Video Post" href="#">Vimeo Video Post</a></li>
+            <li><a title="Youtube Video Post" href="#">Youtube Video Post</a></li>
+            <li><a title="Simple Post" href="#">Simple Post</a></li>
+        </ul>
+    </div>
+    <div class="widget recent-work-widget">
+        <h6 class="widget-title">Recent Work</h6>
+        <ul class="clearfix">
+            <li>
+                <div class="post-thumb"><a rel="prettyPhoto[biopic_recent_work_gal]" href="/theme/images/portfolio/envato.jpg"><img width="50" height="50" title="envato" alt="envato" src="/theme/images/portfolio/envato-50x50.jpg"></a></div>
+            </li>
+            <li>
+                <div class="post-thumb"><a rel="prettyPhoto[biopic_recent_work_gal]" href="/theme/images/portfolio/Rainbow_Necklace.jpg"><img width="50" height="50" title="Rainbow_Necklace" alt="Rainbow_Necklace" src="/theme/images/portfolio/Rainbow_Necklace-50x50.jpg"></a></div>
+            </li>
+            <li>
+                <div class="post-thumb"><a rel="prettyPhoto[biopic_recent_work_gal]" href="/theme/images/portfolio/Bulkhead.jpg"><img width="50" height="50" title="Bulkhead" alt="Bulkhead" src="images/portfolio/Bulkhead-50x50.jpg"></a></div>
+            </li>
+            <li>
+                <div class="post-thumb"><a rel="prettyPhoto[biopic_recent_work_gal]" href="/theme/images/portfolio/In_My_Dreams.jpg"><img width="50" height="50" title="In_My_Dreams" alt="In_My_Dreams" src="/theme/images/portfolio/In_My_Dreams-50x50.jpg"></a></div>
+            </li>
+            <li>
+                <div class="post-thumb"><a rel="prettyPhoto[biopic_recent_work_gal]" href="/theme/images/portfolio/Daim.jpg"><img width="50" height="50" title="Daim" alt="Daim" src="/theme/images/portfolio/Daim-50x50.jpg"></a></div>
+            </li>
+            <li>
+                <div class="post-thumb"><a rel="prettyPhoto[biopic_recent_work_gal]" href="/theme/images/portfolio/Bumble_Bee.jpg"><img width="50" height="50" title="Bumble_Bee" alt="Bumble_Bee" src="/theme/images/portfolio/Bumble_Bee-50x50.jpg"></a></div>
+            </li>
+        </ul>
+    </div>
+</div><!-- /sidebar -->
