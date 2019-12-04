@@ -1,0 +1,37 @@
+﻿@model List<Blog.Data.Models.Category>
+@{ 
+    Layout = "_LayoutManage";
+}
+<div class="row">
+    <div class="col-12">
+
+        <select id="CategoryId">
+            <option disabled="disabled">Bir seçim yapın</option>
+            @{ 
+                foreach(var category in Model)
+                {
+                    <option value="@category.Id">@category.Name</option>
+                }
+            }
+
+        </select>
+
+        <input type="text" placeholder="Başlık" id="Title" />
+
+        <textarea placeholder="içerik..." id="Content"></textarea>
+
+    </div>
+
+</div>
+<div class="row">
+    <div class="col-12">
+
+        <textarea placeholder="içerik..." id="Content"></textarea>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <input type="button" value="Kaydet" onclick="Page.Manage" />
+    </div>
+</div>

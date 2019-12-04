@@ -1,4 +1,5 @@
-﻿<!doctype html>
+﻿@using Microsoft.AspNetCore.Http
+<!doctype html>
 <html>
 <head>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"
@@ -12,7 +13,16 @@
 <body>
     <div class="container">
         <div class="row">
-            <div class="col-12">menü</div>
+            <div class="col-12">
+                @{
+                    if (Context.Session.GetInt32("userId") != null)
+                    {
+                        <a href="@Url.Action("LogoutAction","Manage")">çıkış yap</a>
+                        <a href="@Url.Action("NewBlog","Manage")">yeni yazı</a>
+                    }
+                }
+
+            </div>
         </div>
         @RenderBody()
     </div>

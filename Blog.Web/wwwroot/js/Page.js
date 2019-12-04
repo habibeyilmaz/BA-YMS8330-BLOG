@@ -128,7 +128,7 @@
     },
     Manage: {
         Login: {
-            Submit: function() {
+            Submit: function () {
                 var email = $("#Email").val();
                 var password = $("#Password").val();
 
@@ -146,6 +146,42 @@
                     dataType: "json",
                     contentType: "application/json"
                 });
+            },
+            Submit_Callback: function (result) {
+                window.location.href = "Manage/Index";
+            },
+            Submit_Callback_Error: function (result) {
+                console.log(result);
+            }
+        },
+        NewBlog: {
+            Save: function () {
+                var title = $("#Title").val();
+                var content = $("#Title").val();
+                var categoryID = $("#Title").val();
+
+                var data = {
+                    Title: title,
+                    Content: content
+                };
+
+                $.ajax({
+                    type: "POST",
+                    url: "/Manage/NewBlogAction",
+                    data: JSON.stringify(data),
+                    success: Page.Manage.NewBlog.Save_Callback,
+                    error: Page.Manage.NewBlog.Save_Callback_Error,
+                    dataType: "json",
+                    contentType: "application/json"
+                });
+
+                Save_Callback: function(result) {
+                    console.log(result);
+                },
+                Save_Callback_Error: function(result) {
+                    console.log(result);
+                }
+            }
         }
     }
 }
