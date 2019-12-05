@@ -5,11 +5,10 @@
             url: "/Module/Categories",
             data: [],
             success: function (result) {
-                $("#Module-Categories").html(result)
+                $("#Module-Categories").html(result);
             },
-            dataType: "html" 
+            dataType: "html"
         });
-
     },
     Contact: {
         Send: function () {
@@ -54,47 +53,16 @@
             $("#Contact-Index-Sent").show();
             console.log(result);
         },
-        Send_Callback_Error: function(request, status, error) {
+        Send_Callback_Error: function (request, status, error) {
             $("#Contact-Index-Sending").hide();
             $("#Contact-Index-Sent").hide();
             $("#Contact-Index-Form").show();
             alert("Validation error!");
         }
     },
-    User: {
-        Login: {
-            LoginButton: function() {
-                var email = $("#Email").val();
-                var password = $("#Password").val();
-
-                var data = {
-                    Email: email,
-                    Password: password
-                };
-                $.ajax({
-                    type: "POST",
-                    url: "/User/LoginAction",
-                    data: JSON.stringify(data),
-                    success: Page.User.Login.LoginButton_Callback,
-                    error: Page.User.Login.LoginButton_Callback_Error,
-                    dataType: "json",
-                    contentType: "application/json"
-                });
-            },
-            LoginButton_Callback: function(result) {
-                console.log(result);
-                window.location.href = "/";
-            },
-            LoginButton_Callback_Error: function (request, status, error) {
-                console.log(error);
-                console.log(status);
-                console.log(request);
-            }
-        }
-    },
     Blog: {
         New: {
-            Save: function() {
+            Save: function () {
                 var title = $("#Title").val();
                 var content = $("#Content").val();
                 var categoryId = parseInt($("#Category").val());
@@ -117,9 +85,8 @@
             },
             Save_Callback: function (result) {
                 window.location.href = "/blog/detail/" + result.id;
-               
             },
-            Save_Callback_Error: function(request, status, error) {
+            Save_Callback_Error: function (request, status, error) {
                 console.log(request);
                 console.log(status);
                 console.log(error);
@@ -131,6 +98,15 @@
             Submit: function () {
                 var email = $("#Email").val();
                 var password = $("#Password").val();
+
+                if (email.length < 6 || email.length > 345) {
+                    alert("email format hatası");
+                    return;
+                }
+                else if (password.length < 8 || password.length > 32) {
+                    alert("password format hatası");
+                    return;
+                }
 
                 var data = {
                     Email: email,
@@ -148,39 +124,47 @@
                 });
             },
             Submit_Callback: function (result) {
-                window.location.href = "Manage/Index";
+                if (result.id == "0") {
+                    alert("kullanıcı adı yada şifre hatalı");
+                }
+                else {
+                    window.location.href = "/Manage/Index";
+                }
+                
             },
             Submit_Callback_Error: function (result) {
-                console.log(result);
+                alert("kullanıcı adı yada şifre hatalı");
             }
         },
-        NewBlog: {
+        ManageBlog: {
             Save: function () {
                 var title = $("#Title").val();
-                var content = $("#Title").val();
-                var categoryID = $("#Title").val();
+                var content = $("#Content").val();
+                var categoryId = $("#CategoryId").val();
 
                 var data = {
                     Title: title,
-                    Content: content
+                    Content: content,
+                    CategoryId: categoryId
                 };
 
                 $.ajax({
                     type: "POST",
-                    url: "/Manage/NewBlogAction",
+                    url: "/Manage/ManageBlogAction",
                     data: JSON.stringify(data),
-                    success: Page.Manage.NewBlog.Save_Callback,
-                    error: Page.Manage.NewBlog.Save_Callback_Error,
+                    success: Page.Manage.ManageBlog.Save_Callback,
+                    error: Page.Manage.ManageBlog.Save_Callback_Error,
                     dataType: "json",
                     contentType: "application/json"
                 });
+            },
+            Save_Callback: function (result) {
+                console.log(result);
 
-                Save_Callback: function(result) {
-                    console.log(result);
-                },
-                Save_Callback_Error: function(result) {
-                    console.log(result);
-                }
+                windows.location.href = "/blog/Detail/" + result.Id
+            },
+            Save_Callback_Error: function (result) {
+                console.log(result);
             }
         }
     }

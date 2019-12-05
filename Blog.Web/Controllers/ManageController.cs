@@ -1,45 +1,51 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Blog.Data.Context;
 using Blog.Data.Dto;
 using Blog.Data.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Blog = Blog.Data.Models.Blog;
 
 namespace Blog.Web.Controllers
 {
     public class ManageController : Controller
     {
-        private BlogContext _blogContext;
+        private readonly BlogContext _blogContext;
 
         public ManageController(BlogContext blogContext)
         {
             _blogContext = blogContext;
         }
+
         public IActionResult Index()
         {
             int? userId = HttpContext.Session.GetInt32("userId");
 
-            if (userId== null)
+            if (userId == null)
             {
                 return RedirectToAction("Login", "Manage");
             }
+
             return View();
         }
+
         public IActionResult Login()
         {
             return View();
         }
 
-        public IActionResult LoginAction([FromBody] ManageLoginActionDto manageLoginActionDto)
+        public IActionResult LoginAction([FromBody]ManageLoginActionDto manageLoginActionDto)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest("kötü çocuk");
             }
-            var user = _blogContext.Users.SingleOrDefault(a => a.Email == manageLoginActionDto.Email && a.Password == manageLoginActionDto.Password);
+
+            User user = _blogContext
+                .Users.SingleOrDefault(a => a.Email == manageLoginActionDto.Email
+                                            && a.Password == manageLoginActionDto.Password);
 
             if (user == null)
             {
@@ -57,18 +63,29 @@ namespace Blog.Web.Controllers
             return RedirectToAction("Login", "Manage");
         }
 
-        public IActionResult NewBlog()
+        public IActionResult ManageBlog(int id)
         {
             if (HttpContext.Session.GetInt32("userId") == null)
             {
                 return RedirectToAction("Login", "Manage");
             }
+
+            Data.Models.Blog blogModel = null;
+
+            if (id != 0)
+            {
+                blogModel = _blogContext.Blogs.Find(id);
+            }
+            
+
             List<Category> categories = _blogContext.Categories.ToList();
 
-            return View(categories);
+            var resultTuple = new Tuple<int, List<Category>, Data.Models.Blog>(id, categories, null);
+
+            return View(resultTuple);
         }
 
-        public IActionResult NewBlogAction([FromBody] ManageNewBlogActionDto manageNewBlogActionDto)
+        public IActionResult ManageBlogAction([FromBody] ManageBlogActionDto manageNewBlogActionDto)
         {
             if (HttpContext.Session.GetInt32("userId") == null)
             {
@@ -79,18 +96,22 @@ namespace Blog.Web.Controllers
             {
                 return BadRequest("bad boy");
             }
+
             Data.Models.Blog blog = new Data.Models.Blog()
             {
-
-                //buraya yapışacak.
+                CategoryId = manageNewBlogActionDto.CategoryId,
+                CreateDate = DateTime.UtcNow,
+                Content = manageNewBlogActionDto.Content,
+                Title = manageNewBlogActionDto.Title,
+                Hit = 0,
+                Deleted = false,
+                UserId = HttpContext.Session.GetInt32("userId").Value
             };
 
             _blogContext.Blogs.Add(blog);
             _blogContext.SaveChanges();
 
             return new JsonResult(blog);
-
-
         }
     }
 }

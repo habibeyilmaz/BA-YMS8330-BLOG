@@ -18,7 +18,7 @@
                     if (Context.Session.GetInt32("userId") != null)
                     {
                         <a href="@Url.Action("LogoutAction","Manage")">çıkış yap</a>
-                        <a href="@Url.Action("NewBlog","Manage")">yeni yazı</a>
+                        <a href="@Url.Action("ManageBlog","Manage",new {id=0})">yeni yazı</a>
                     }
                 }
 

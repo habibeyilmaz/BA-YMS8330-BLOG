@@ -5,8 +5,10 @@ using System.Text;
 
 namespace Blog.Data.Dto
 {
-    public class ManageNewBlogActionDto
+    public class ManageBlogActionDto
     {
+        public int Id { get; set; }
+
         [Required]
         public int CategoryId { get; set; }
 
