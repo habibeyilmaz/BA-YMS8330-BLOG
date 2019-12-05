@@ -1,14 +1,14 @@
-﻿@model List<Blog.Data.Models.Category>
+﻿@model Tuple<int, List<Blog.Data.Models.Category>,Blog.Data.Models.Blog>
 @{
     Layout = "_LayoutManage";
 }
 <div class="row">
     <div class="col-12">
-        <input type="hidden" id="Id" value="@ViewBag.BlogId"/>
+        <input type="hidden" id="Id" value="@Model.Item1"/>
         <select id="CategoryId">
             <option disabled="disabled">Bir seçim yap evlat!</option>
             @{
-                foreach (var category in Model)
+                foreach (var category in Model.Item2)
                 {
                     <option value="@category.Id">@category.Name</option>
                 }
@@ -18,12 +18,12 @@
 </div>
 <div class="row">
     <div class="col-12">
-        <input type="text" placeholder="Başlık" id="Title" />
+        <input type="text" placeholder="Başlık" id="Title" value="@Model.Item3.Title" />
     </div>
 </div>
 <div class="row">
     <div class="col-12">
-        <textarea placeholder="İçerik..." id="Content"></textarea>
+        <textarea placeholder="İçerik..." id="Content">value="@Model.Item3.Content"</textarea>
     </div>
 </div>
 <div class="row">

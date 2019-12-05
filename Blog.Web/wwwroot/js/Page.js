@@ -141,6 +141,7 @@
                 var title = $("#Title").val();
                 var content = $("#Content").val();
                 var categoryId = $("#CategoryId").val();
+                var id = $("#Id").val();
 
                 var data = {
                     Title: title,

@@ -70,7 +70,7 @@ namespace Blog.Web.Controllers
                 return RedirectToAction("Login", "Manage");
             }
 
-            Data.Models.Blog blogModel = null;
+            Data.Models.Blog blogModel = new Data.Models.Blog();
 
             if (id != 0)
             {
@@ -85,7 +85,7 @@ namespace Blog.Web.Controllers
             return View(resultTuple);
         }
 
-        public IActionResult ManageBlogAction([FromBody] ManageBlogActionDto manageNewBlogActionDto)
+        public IActionResult ManageBlogAction([FromBody] ManageBlogActionDto manageBlogActionDto)
         {
             if (HttpContext.Session.GetInt32("userId") == null)
             {
@@ -96,21 +96,34 @@ namespace Blog.Web.Controllers
             {
                 return BadRequest("bad boy");
             }
+            Data.Models.Blog blog;
 
-            Data.Models.Blog blog = new Data.Models.Blog()
+            if (manageBlogActionDto.Id!= 0)
             {
-                CategoryId = manageNewBlogActionDto.CategoryId,
-                CreateDate = DateTime.UtcNow,
-                Content = manageNewBlogActionDto.Content,
-                Title = manageNewBlogActionDto.Title,
-                Hit = 0,
-                Deleted = false,
-                UserId = HttpContext.Session.GetInt32("userId").Value
-            };
+                blog = _blogContext.Blogs.Find(manageBlogActionDto.Id);
 
-            _blogContext.Blogs.Add(blog);
+                blog.Title= manageBlogActionDto.Title;
+                blog.Content= manageBlogActionDto.Content;
+                blog.CategoryId= manageBlogActionDto.CategoryId;
+                _blogContext.Blogs.Update(blog);
+
+            }
+            else
+            {
+                blog = new Data.Models.Blog()
+                {
+                    CategoryId = manageBlogActionDto.CategoryId,
+                    CreateDate = DateTime.UtcNow,
+                    Content = manageBlogActionDto.Content,
+                    Title = manageBlogActionDto.Title,
+                    Hit = 0,
+                    Deleted = false,
+                    UserId = HttpContext.Session.GetInt32("userId").Value
+                };
+                _blogContext.Blogs.Add(blog);
+
+            }
             _blogContext.SaveChanges();
-
             return new JsonResult(blog);
         }
     }
