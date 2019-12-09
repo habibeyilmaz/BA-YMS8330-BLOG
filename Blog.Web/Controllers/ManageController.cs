@@ -76,12 +76,11 @@ namespace Blog.Web.Controllers
             {
                 blogModel = _blogContext.Blogs.Find(id);
             }
-            
 
             List<Category> categories = _blogContext.Categories.ToList();
 
-            var resultTuple = new Tuple<int, List<Category>, Data.Models.Blog>(id, categories, null);
-
+            var resultTuple =
+                new Tuple<int, List<Category>, Data.Models.Blog>(id, categories, blogModel);
             return View(resultTuple);
         }
 
@@ -96,17 +95,17 @@ namespace Blog.Web.Controllers
             {
                 return BadRequest("bad boy");
             }
+
             Data.Models.Blog blog;
 
-            if (manageBlogActionDto.Id!= 0)
+            if (manageBlogActionDto.Id != 0)
             {
                 blog = _blogContext.Blogs.Find(manageBlogActionDto.Id);
 
-                blog.Title= manageBlogActionDto.Title;
-                blog.Content= manageBlogActionDto.Content;
-                blog.CategoryId= manageBlogActionDto.CategoryId;
+                blog.Title = manageBlogActionDto.Title;
+                blog.Content = manageBlogActionDto.Content;
+                blog.CategoryId = manageBlogActionDto.CategoryId;
                 _blogContext.Blogs.Update(blog);
-
             }
             else
             {
@@ -121,9 +120,10 @@ namespace Blog.Web.Controllers
                     UserId = HttpContext.Session.GetInt32("userId").Value
                 };
                 _blogContext.Blogs.Add(blog);
-
             }
+
             _blogContext.SaveChanges();
+
             return new JsonResult(blog);
         }
     }

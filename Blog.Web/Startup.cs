@@ -34,7 +34,7 @@ namespace Blog.Web
                 options.Cookie.IsEssential = true;
             });
 
-            services.AddDbContext<BlogContext>(options => options.UseSqlServer("Server=localhost;Database=YMS8330_Blog;User Id=sa;Password=123;"));
+            services.AddDbContext<BlogContext>(options => options.UseSqlServer("Server=localhost;Database=YMS8330_Blog;User Id=Habibe;Password=habibeibrahim;"));
 
             services.Configure<CookiePolicyOptions>(options =>
             {

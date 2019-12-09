@@ -102,9 +102,8 @@
                 if (email.length < 6 || email.length > 345) {
                     alert("email format hatası");
                     return;
-                }
-                else if (password.length < 8 || password.length > 32) {
-                    alert("password format hatası");
+                } else if (password.length < 8 || password.length > 32) {
+                    alert("şifre uzunluk hatası");
                     return;
                 }
 
@@ -125,15 +124,13 @@
             },
             Submit_Callback: function (result) {
                 if (result.id == "0") {
-                    alert("kullanıcı adı yada şifre hatalı");
-                }
-                else {
+                    alert("Kullanıcı adı veya şifre hatalı");
+                } else {
                     window.location.href = "/Manage/Index";
                 }
-                
             },
             Submit_Callback_Error: function (result) {
-                alert("kullanıcı adı yada şifre hatalı");
+                alert("Kullanıcı adı veya şifre hatalı");
             }
         },
         ManageBlog: {
@@ -146,7 +143,8 @@
                 var data = {
                     Title: title,
                     Content: content,
-                    CategoryId: categoryId
+                    CategoryId: categoryId,
+                    Id: id
                 };
 
                 $.ajax({
@@ -162,7 +160,7 @@
             Save_Callback: function (result) {
                 console.log(result);
 
-                windows.location.href = "/blog/Detail/" + result.Id
+                window.location.href = "/Blog/Detail/" + result.id;
             },
             Save_Callback_Error: function (result) {
                 console.log(result);
