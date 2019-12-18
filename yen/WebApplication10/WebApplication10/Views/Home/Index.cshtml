@@ -1,0 +1,52 @@
+﻿
+<!doctype html>
+<html>
+<head>
+    <title>site başlığı</title>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+            crossorigin="anonymous"></script>
+    <script>
+        var Page = {
+            Send: function () {
+                var name = $("#Name").val();
+                var surname = $("#Surname").val();
+                var data = {
+                    Name: name,
+                    Surname: surname
+                }
+
+                var json = JSON.stringify(data);
+                $.ajax({
+                    type: "POST",
+                    url: "/home/name",
+                    data: json,
+                    success: Page.Send_Callback,
+                    dataType: "text",
+                    contentType:"application/json; charset=utf-8"
+                });
+
+
+            },
+
+            Send_Callback: function (result) {
+                $("#Ornek").html(result);
+            }
+        };
+    </script>
+
+</head>
+<body>
+    <div>içerik</div>
+    <div>
+        <input type="text" id="Demo" />
+        <div>name:</div><input type="text" id="Name" />
+        <div>surname:</div><input type="text" id="Surname" />
+        <input type="button" value="gönder" onclick="Page.Send();" />
+
+
+        <div id="Ornek"></div>
+    </div>
+</body>
+
+</html>

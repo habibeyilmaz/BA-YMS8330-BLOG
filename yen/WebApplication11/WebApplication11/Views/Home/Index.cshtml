@@ -1,0 +1,41 @@
+﻿<!doctype html>
+<html>
+<head>
+    <title>site başlığı</title>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+            crossorigin="anonymous"></script>
+    <script>
+        var Page = {
+            Send: function () {
+                var demo = $("#Demo").val();
+                var data = {
+                    Demo: demo
+                }
+
+                var json = JSON.stringify(data);
+                $.ajax({
+                    type: "POST",
+                    url: "/home/demo",
+                    data: json,
+                    success: Page.Send_Callback,
+                    dataType: "text"
+                });
+            },
+
+            Send_Callback: function (result) {
+                $("#Holder").html(result);
+            }
+        };
+    </script>
+</head>
+<body>
+    <div>içerik</div>
+    <div>
+        <input type="text" id="Demo" />
+        <input type="button" value="gönder" onclick="Page.Send();" />
+        <div id="Holder"></div>
+    </div>
+</body>
+
+</html>
